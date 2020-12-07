@@ -33,7 +33,7 @@ public class Prog {
         System.out.println(p5.getX() + " " + p5.getY());
 
         Punto2D p6 = new Punto2D(3.2, -4.8);
-        p.flip();
+        p6.flip();
         System.out.println(p6);
 
         Punto2D p7 = new Punto2D(-3.0, 4.0);
