@@ -66,3 +66,6 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,netbeans,java
 /UD03_Utilización_De_Objetos/Punto2D_Repaso/target/
 /UD03_Utilización_De_Objetos/TimeLapse_Repaso/target/
+/UD04_Uso_De_Estructuras_De_Control/TriangulosConCerillas/target/
+/UD04_Uso_De_Estructuras_De_Control/Artropodos/target/
+/UD04_Uso_De_Estructuras_De_Control/CoccionDeHuevos/target/

@@ -84,7 +84,6 @@ public class TimeLapse {
         this.s = s-(h*3600+m*60);
     }
     
-    @Override
     public String toString() {
         return "TimeLapse["+h+"h:"+m+"m:"+s+"s]";
     }
