@@ -15,7 +15,7 @@ import java.time.Period;
 
 class Vehiculo {
     
-    //Atributos de objeto.
+    //Atributos de objeto. Privados, solo son accesibles a través de los métodos getter y setter.
     private String marca;
     private String matricula;
     private int numeroKm;
@@ -55,7 +55,8 @@ class Vehiculo {
     
     /**
      * Método para obtener la marca del vehiculo.
-     * @return 
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
+     * @return String
      */
     public String getMarca() {
         return marca;
@@ -63,6 +64,7 @@ class Vehiculo {
 
     /**
      * Método para dar valor a marca.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param marca 
      */
     public void setMarca(String marca) {
@@ -71,6 +73,7 @@ class Vehiculo {
 
     /**
      * Método para obtener la matrícula del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return String
      */
     public String getMatricula() {
@@ -79,6 +82,7 @@ class Vehiculo {
 
     /**
      * Método para dar valor a matricula.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param matricula 
      */
     public void setMatricula(String matricula) {
@@ -87,6 +91,7 @@ class Vehiculo {
 
     /**
      * Método para obtener el número de kms del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return int
      */
     public int getNumeroKm() {
@@ -95,6 +100,7 @@ class Vehiculo {
 
     /**
      * Método para dar valor numeroKm.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param numeroKm 
      */
     public void setNumeroKm(int numeroKm) {
@@ -103,6 +109,7 @@ class Vehiculo {
 
     /**
      * Método para obtener la fecha de matriculación del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return LocalDate
      */
     public LocalDate getFechaMatriculacion() {
@@ -111,6 +118,7 @@ class Vehiculo {
 
     /**
      * Método para dar valor a fechaMatriculacion.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param fechaMatriculacion 
      */
     public void setFechaMatriculacion(LocalDate fechaMatriculacion) {
@@ -119,6 +127,7 @@ class Vehiculo {
 
     /**
      * Método para obtener la descripción del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return String
      */
     public String getDescripcion() {
@@ -127,6 +136,7 @@ class Vehiculo {
 
     /**
      * Método para dar valor a descripcion.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param descripcion 
      */
     public void setDescripcion(String descripcion) {
@@ -135,6 +145,7 @@ class Vehiculo {
 
     /**
      * Método para obtener el precio del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return Double
      */
     public Double getPrecio() {
@@ -143,6 +154,7 @@ class Vehiculo {
     
     /**
      * Método para dar valor a precio.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param precio 
      */
     public void setPrecio(Double precio) {
@@ -151,6 +163,7 @@ class Vehiculo {
 
     /**
      * Método para obtener el nombre del propietario del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return String
      */
     public String getNombrePropietario() {
@@ -159,6 +172,7 @@ class Vehiculo {
 
     /**
      * Método para dar valor a nombrePropietario.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param nombrePropietario 
      */
     public void setNombrePropietario(String nombrePropietario) {
@@ -167,6 +181,7 @@ class Vehiculo {
 
     /**
      * Método para obtener el dni del propietario del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return String
      */
     public String getDniPropietario() {
@@ -175,6 +190,7 @@ class Vehiculo {
 
     /**
      * Método para dar valor a dniPropietario.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param dniPropietario 
      */
     public void setDniPropietario(String dniPropietario) {
@@ -182,7 +198,8 @@ class Vehiculo {
     }
     
     /**
-     * Método para actualizar el número de kms del vehiculo sumando a numeroKm los km indicados en el parámetro.
+     * Método para actualizar el número de kms del vehiculo sumando a numeroKm a los kms indicados en el parámetro.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @param km 
      */
     public void actualizarKm(int km){
@@ -191,6 +208,7 @@ class Vehiculo {
     
     /**
      * Método que nos devuelve el número de años que hay entre la fecha actual y la fecha de matriculación del vehiculo.
+     * Es un método público para que sea accedible desde fuera de la clase y no es estático, por lo tanto es necesario una instancia de la clase.
      * @return int
      */
     public int get_Anios(){

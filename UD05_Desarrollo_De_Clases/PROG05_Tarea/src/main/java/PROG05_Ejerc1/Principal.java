@@ -7,7 +7,7 @@ import java.time.LocalDate;
 /**
  *
  * @author Manuel
- * Clase publica, en ella introducimos datos por teclado e interaccionamos con el resto de las clases.
+ * Clase publica, en ella interaccionamos con el resto de las clases.
  */
 public class Principal {
     
@@ -19,7 +19,7 @@ public class Principal {
      * @param args 
      */
     public static void main(String[] args) {
-        accionMenu(menu());
+        accionMenu(menu()); //Llamamos a método accionMenu() y le pasamos como parámetro el valor devuelto por el método menu().
     }
 
     /**
@@ -59,20 +59,20 @@ public class Principal {
     private static void accionMenu(int opcion){
         switch(opcion){
             case 1:
-                if(!addVehiculo()) accionMenu(menu());
-                Herramienta.pulsarEnter();
+                if(!addVehiculo()) accionMenu(menu()); // Si el método addVehiculo() devuelve un false.
+                Herramienta.pulsarEnter(); //LLamamos a el método pulsarEnter() de la clase Herramientas.
                 accionMenu(menu());
                 break;
             case 2:
-                if(nuevoVehiculo == null) System.out.println("Error No hay ningún vehiculo.");
+                if(nuevoVehiculo == null) System.out.println("Error No hay ningún vehiculo."); // Comprobamos si hay algún vehiculo.
                 else System.out.println("Matrícula: "+nuevoVehiculo.getMatricula());
-                Herramienta.pulsarEnter();
+                Herramienta.pulsarEnter(); 
                 accionMenu(menu());
                 break;
             case 3:
                 if(nuevoVehiculo == null) System.out.println("Error No hay ningún vehiculo.");
-                else System.out.println("Número de Kms: "+nuevoVehiculo.getNumeroKm());
-                Herramienta.pulsarEnter();
+                else System.out.println("Número de Kms: "+nuevoVehiculo.getNumeroKm()); 
+                Herramienta.pulsarEnter(); 
                 accionMenu(menu());
                 break;
             case 4:
@@ -111,13 +111,13 @@ public class Principal {
                     System.out.println("Matrícula: "+nuevoVehiculo.getMatricula());
                     System.err.println("Número de Kms: "+nuevoVehiculo.getNumeroKm());
                 }
-                Herramienta.pulsarEnter();
+                Herramienta.pulsarEnter(); 
                 accionMenu(menu());
                 break;
             case 8:
                 if(nuevoVehiculo == null) System.out.println("Error No hay ningún vehiculo.");
                 else System.out.println("Precio: "+nuevoVehiculo.getPrecio());
-                Herramienta.pulsarEnter();
+                Herramienta.pulsarEnter(); 
                 accionMenu(menu());
                 break;
             case 9:
@@ -162,7 +162,9 @@ public class Principal {
      */
     private static boolean addVehiculo(){
         
-        nuevoVehiculo = null;
+        nuevoVehiculo = null; // inicializamos la variable de la clase.
+        
+        //Variables del método.
         String marca, matricula, descripcion, nombrePropietario, dniPropietario = null;
         int numeroKilometros = -1;
         double precio = -1;
@@ -183,7 +185,7 @@ public class Principal {
         Herramienta.limpiarConsola(30);
         
         while(fechaMatriculacion == null || !fechaMatriculacion.isBefore(fechaActual)){
-            System.out.println("Insera la fecha de matriculación del vehiculo:");
+            System.out.println("Inserta la fecha de matriculación del vehiculo:");
             fechaMatriculacion = fecha();
         }
         Herramienta.limpiarConsola(30);
@@ -207,7 +209,7 @@ public class Principal {
             dniPropietario = Herramienta.insertarCadena().toUpperCase();
         }
         Herramienta.limpiarConsola(30);
-        
+        //Instanciamos la clase y inicializamos todos los atributos del objeto nuevoVehiculo.
         nuevoVehiculo = new Vehiculo(marca, matricula, numeroKilometros, fechaMatriculacion, descripcion, precio, nombrePropietario, dniPropietario);
         System.out.println("Vehiculo añadido con éxito.");
         return true;
