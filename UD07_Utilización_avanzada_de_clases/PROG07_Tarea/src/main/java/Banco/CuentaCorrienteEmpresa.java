@@ -5,8 +5,6 @@
  */
 package Banco;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Manuel
@@ -44,14 +42,14 @@ public class CuentaCorrienteEmpresa extends CuentaCorriente {
         this.comisionFijaPorDescubierto = comisionFijaPorDescubierto;
     }
 
-    public ArrayList<String> getListaEntidades() {
-        return listaEntidades;
+    public String getEntidadesAutorizadas() {
+        return entidadesAutorizadas;
     }
 
-    public void setListaEntidades(ArrayList<String> listaEntidades) {
-        this.listaEntidades = listaEntidades;
+    public void setEntidadesAutorizadas(String entidadesAutorizadas) {
+        this.entidadesAutorizadas = entidadesAutorizadas;
     }
-
+    
     public Persona getTitular() {
         return titular;
     }
@@ -80,5 +78,6 @@ public class CuentaCorrienteEmpresa extends CuentaCorriente {
     public String devolverInfoString() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 
 }

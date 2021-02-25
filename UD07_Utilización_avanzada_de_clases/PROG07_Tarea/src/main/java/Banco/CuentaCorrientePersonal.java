@@ -5,8 +5,6 @@
  */
 package Banco;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Manuel
@@ -26,12 +24,12 @@ public class CuentaCorrientePersonal extends CuentaCorriente{
         this.comisionMantenimiento = comisionMantenimiento;
     }
 
-    public ArrayList<String> getListaEntidades() {
-        return listaEntidades;
+    public String getEntidadesAutorizadas() {
+        return entidadesAutorizadas;
     }
 
-    public void setListaEntidades(ArrayList<String> listaEntidades) {
-        this.listaEntidades = listaEntidades;
+    public void setEntidadesAutorizadas(String entidadesAutorizadas) {
+        this.entidadesAutorizadas = entidadesAutorizadas;
     }
 
     public Persona getTitular() {

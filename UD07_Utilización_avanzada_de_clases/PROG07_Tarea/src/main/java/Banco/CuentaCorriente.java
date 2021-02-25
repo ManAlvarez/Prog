@@ -5,14 +5,12 @@
  */
 package Banco;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Manuel
  */
 public abstract class CuentaCorriente extends CuentaBancaria{
     
-    ArrayList<String> listaEntidades;
-    
+    protected String entidadesAutorizadas;
+
 }

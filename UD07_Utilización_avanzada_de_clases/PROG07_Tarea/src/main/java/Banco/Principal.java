@@ -167,7 +167,7 @@ public class Principal {
         nuevaCuentaAhorro.setNumeroCuenta(numeroDeCuenta);
         nuevaCuentaAhorro.setTipoInteres(tipoInteres);
         nuevaCuentaBancaria = nuevaCuentaAhorro;
-        banco.addCuentaBancaria(nuevaCuentaBancaria);
+        banco.abrirCuenta(nuevaCuentaBancaria);
     }
     
     private static void insertarDatosCuentaCorrientePersonal(Persona datosPersonales, double saldoInicial, String numeroDeCuenta){
@@ -181,7 +181,7 @@ public class Principal {
         nuevaCuentaCorrientePersonal.setNumeroCuenta(numeroDeCuenta);
         nuevaCuentaCorrientePersonal.setComisionMantenimiento(comisionDeMantenimiento);
         nuevaCuentaBancaria = nuevaCuentaCorrientePersonal;
-        banco.addCuentaBancaria(nuevaCuentaBancaria);
+        banco.abrirCuenta(nuevaCuentaBancaria);
     }
     
     private static void insertarDatosCuentaCorrienteDeEmpresa(Persona datosPersonales, double saldoInicial, String numeroDeCuenta){
@@ -203,16 +203,14 @@ public class Principal {
         nuevaCuentaCorrienteDeEmpresa.setTipoInteresDescubierto(tipoInteresPorDescubierto);
         nuevaCuentaCorrienteDeEmpresa.setComisionFijaPorDescubierto(comisionFijaPorDescubierto);
         nuevaCuentaBancaria = nuevaCuentaCorrienteDeEmpresa;
-        banco.addCuentaBancaria(nuevaCuentaBancaria);
+        banco.abrirCuenta(nuevaCuentaBancaria);
     }
     
     private static void listarCuentas(){
-        CuentaBancaria[] listaCuentasBancarias = new CuentaBancaria[banco.getCuentasBancarias().length];
-        listaCuentasBancarias = banco.getCuentasBancarias();
-        for(int i = 0; i < listaCuentasBancarias.length; i++){
-            if(listaCuentasBancarias[i] != null){
-                System.out.println("Nombre: "+listaCuentasBancarias[i].titular.getNombre());
-            }       
+        String[] cuentas = banco.listadoCuentas();
+        for(int i = 0; i < cuentas.length; i++){
+                System.out.println(cuentas[i]);
+                
         }
     }
         
