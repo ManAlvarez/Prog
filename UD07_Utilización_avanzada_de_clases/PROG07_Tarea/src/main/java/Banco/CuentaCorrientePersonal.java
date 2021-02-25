@@ -58,7 +58,13 @@ public class CuentaCorrientePersonal extends CuentaCorriente{
     
     @Override
     public String devolverInfoString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder sb = new StringBuilder();
+        sb.append("CuentaCorrientePersonal{").append(titular.devolverInfoString());
+        sb.append(", numeroCuenta=").append(numeroCuenta);
+        sb.append(", saldo=").append(saldo);
+        sb.append(", comisionMantenimiento=").append(comisionMantenimiento);
+        sb.append('}');
+        return sb.toString();
     }
     
 }

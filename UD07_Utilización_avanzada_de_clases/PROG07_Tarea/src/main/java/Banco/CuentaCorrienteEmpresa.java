@@ -49,7 +49,7 @@ public class CuentaCorrienteEmpresa extends CuentaCorriente {
     public void setEntidadesAutorizadas(String entidadesAutorizadas) {
         this.entidadesAutorizadas = entidadesAutorizadas;
     }
-    
+
     public Persona getTitular() {
         return titular;
     }
@@ -76,8 +76,14 @@ public class CuentaCorrienteEmpresa extends CuentaCorriente {
 
     @Override
     public String devolverInfoString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder sb = new StringBuilder();
+        sb.append("CuentaCorrienteEmpresa{").append(titular.devolverInfoString());
+        sb.append(", numeroCuenta=").append(numeroCuenta);
+        sb.append(", saldo=").append(saldo);
+        sb.append(", tipoInteresDescubierto=").append(tipoInteresDescubierto);
+        sb.append(", maxDescubiertoPermitido=").append(maxDescubiertoPermitido);
+        sb.append(", comisionFijaPorDescubierto=").append(comisionFijaPorDescubierto);
+        sb.append('}');
+        return sb.toString();
     }
-    
-
 }

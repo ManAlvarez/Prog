@@ -52,12 +52,7 @@ public class Banco {
     public String[] listadoCuentas() {
         String[] cuentas = new String[contador];
         for (int i = 0; i < cuentas.length; i++) {
-            cuentas[i] = "\nNúmero de cuenta: " + cuentasBancarias[i].numeroCuenta
-                    + "\nTitular"
-                    + "\nNombre: " + cuentasBancarias[i].titular.getNombre()
-                    + "\nApellidos: " + cuentasBancarias[i].titular.getApellidos()
-                    + "\nDNI: " + cuentasBancarias[i].titular.getDNI()
-                    + "\nSaldo: " + cuentasBancarias[i].saldo;              
+               cuentas[i] = cuentasBancarias[i].devolverInfoString();
         }
         return cuentas;
     }
@@ -69,8 +64,13 @@ public class Banco {
      * @param IBAN
      * @return true or false.
      */
-    public boolean informacionCuenta(String IBAN) {
-        return true;
+    public String informacionCuenta(String IBAN) {
+        for (int i = 0; i < contador; i++) {
+            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+                return cuentasBancarias[i].devolverInfoString();
+            }
+        }
+        return null;
     }
 
     /**
@@ -83,7 +83,13 @@ public class Banco {
      * @return true or false.
      */
     public boolean ingresoCuenta(String IBAN, double cantidadAIngresar) {
-        return true;
+        for (int i = 0; i < contador; i++) {
+            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+                cuentasBancarias[i].saldo += cantidadAIngresar;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -96,7 +102,13 @@ public class Banco {
      * @return true or false;
      */
     public boolean retiradaCuenta(String IBAN, double cantidadARetirar) {
-        return true;
+        for (int i = 0; i < contador; i++) {
+            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+                cuentasBancarias[i].saldo -= cantidadARetirar;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -106,8 +118,13 @@ public class Banco {
      * @param IBAN
      * @return
      */
-    public int obtenerSaldo(String IBAN) {
+    public double obtenerSaldo(String IBAN) {
+        for (int i = 0; i < contador; i++) {
+            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+                return cuentasBancarias[i].saldo;
+            }
+        }
         return -1;
-    }
+    }   
 
 }

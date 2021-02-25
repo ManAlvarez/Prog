@@ -64,15 +64,19 @@ public class Principal {
                 accionMenuPrincipal();
                 break;
             case 3:
+                obtenerDatosCuenta();
                 accionMenuPrincipal();
                 break;
             case 4:
+                realizarIngreso();
                 accionMenuPrincipal();
                 break;
             case 5:
+                realizarRetirada();
                 accionMenuPrincipal();                
                 break;
             case 6:
+                obtenerSaldoCuenta();
                 accionMenuPrincipal();
                 break;
             case 7:
@@ -213,6 +217,64 @@ public class Principal {
                 
         }
     }
+    
+    private static void obtenerDatosCuenta(){
+        String datos = "";
+        String numeroDeCuenta = "";
+        System.out.println("IBAN: ");
+        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+        datos = banco.informacionCuenta(numeroDeCuenta);
+        if(datos != null){
+            System.out.println(datos);
+        }else{
+            System.out.println("La cuenta no existe.");
+        }
+    }
+    
+    private static void realizarIngreso(){
+        boolean exito = false;
+        String numeroDeCuenta = "";
+        double ingreso = 0;
+        System.out.println("IBAN: ");
+        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+        System.out.println("Ingreso: ");
+        ingreso = Util.insertarNumeroDecimal();
+        exito = banco.ingresoCuenta(numeroDeCuenta, ingreso);
+        if(exito){
+            System.out.println("Ingreso realizado con exito.");
+        }else{
+            System.out.println("Error al realizar el ingreso.");
+        }
+    }
+    
+    private static void realizarRetirada(){
+        boolean exito = false;
+        String numeroDeCuenta = "";
+        double retirar = 0;
+        System.out.println("IBAN: ");
+        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+        System.out.println("Retirar: ");
+        retirar = Util.insertarNumeroDecimal();
+        exito = banco.retiradaCuenta(numeroDeCuenta, retirar);
+        if(exito){
+            System.out.println("Retirada realizada con exito.");
+        }else{
+            System.out.println("Error al realizar la retirada.");
+        }
+    }
         
+    private static void obtenerSaldoCuenta(){
+        double saldo = 0;
+        String numeroDeCuenta = "";
+        System.out.println("IBAN: ");
+        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+        saldo = banco.obtenerSaldo(numeroDeCuenta);
+        if(saldo != -1){
+            System.out.println(saldo);
+        }else{
+            System.out.println("Error al obtener el saldo.");
+        }
+    }
+
         
 }

@@ -54,7 +54,13 @@ public class CuentaAhorro extends CuentaBancaria {
 
     @Override
     public String devolverInfoString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder sb = new StringBuilder();
+        sb.append("CuentaAhorro{").append(titular.devolverInfoString());
+        sb.append(", numeroCuenta=").append(numeroCuenta);
+        sb.append(", saldo=").append(saldo);
+        sb.append(", tipoInteres=").append(tipoInteres);
+        sb.append('}');
+        return sb.toString();
     }
 
 }

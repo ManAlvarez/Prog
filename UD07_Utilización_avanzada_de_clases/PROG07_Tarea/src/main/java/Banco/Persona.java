@@ -50,7 +50,12 @@ public class Persona implements Imprimible {
 
     @Override
     public String devolverInfoString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Persona{nombre=").append(nombre);
+        sb.append(", apellidos=").append(apellidos);
+        sb.append(", DNI=").append(DNI);
+        sb.append('}');
+        return sb.toString();
+    }  
 
 }
