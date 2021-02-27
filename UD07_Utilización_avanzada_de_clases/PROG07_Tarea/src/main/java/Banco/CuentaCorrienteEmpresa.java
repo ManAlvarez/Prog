@@ -90,9 +90,12 @@ public class CuentaCorrienteEmpresa extends CuentaCorriente {
         sb.append("CuentaCorrienteEmpresa{").append(titular.devolverInfoString());
         sb.append(", numeroCuenta=").append(numeroCuenta);
         sb.append(", saldo=").append(saldo);
+        sb.append(" [ ");
+        sb.append("entidadesAutorizadas=").append(entidadesAutorizadas);
         sb.append(", tipoInteresDescubierto=").append(tipoInteresDescubierto);
         sb.append(", maxDescubiertoPermitido=").append(maxDescubiertoPermitido);
         sb.append(", comisionFijaPorDescubierto=").append(comisionFijaPorDescubierto);
+        sb.append(" ]");
         sb.append('}');
         return sb.toString();
     }

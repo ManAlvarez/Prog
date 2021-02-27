@@ -50,7 +50,10 @@ public class CuentaCorrientePersonal extends CuentaCorriente {
         sb.append("CuentaCorrientePersonal{").append(titular.devolverInfoString());
         sb.append(", numeroCuenta=").append(numeroCuenta);
         sb.append(", saldo=").append(saldo);
+        sb.append(" [ ");
+        sb.append("entidadesAutorizadas=").append(entidadesAutorizadas);
         sb.append(", comisionMantenimiento=").append(comisionMantenimiento);
+        sb.append(" ]");
         sb.append('}');
         return sb.toString();
     }

@@ -7,20 +7,33 @@ package Banco;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Clase pública donde almacenamos y hacemos operaciones sobre
+ * las cuentas bancarias.
  */
 public class Banco {
 
+    // Atributos declarados como private, solo accesibles desde la clase. 
+    // Array para almacenar todas las cuentas que creamos.
     private CuentaBancaria[] cuentasBancarias = new CuentaBancaria[100];
+    // Contador para dimensinar el array.
     private static int contador = 0;
 
+    // Constructor.
     public Banco() {
     }
 
+    /**
+     * Devuelve un array con las cuentas bancarias del banco.
+     * @return Array[].
+     */
     public CuentaBancaria[] getCuentasBancarias() {
         return cuentasBancarias;
     }
 
+    /**
+     * Actualiza el array de cuentas bancarias.
+     * @param cuentasBancarias 
+     */
     public void setCuentasBancarias(CuentaBancaria[] cuentasBancarias) {
         this.cuentasBancarias = cuentasBancarias;
     }
@@ -52,7 +65,7 @@ public class Banco {
     public String[] listadoCuentas() {
         String[] cuentas = new String[contador];
         for (int i = 0; i < cuentas.length; i++) {
-               cuentas[i] = cuentasBancarias[i].devolverInfoString();
+            cuentas[i] = cuentasBancarias[i].devolverInfoString();
         }
         return cuentas;
     }
@@ -66,7 +79,7 @@ public class Banco {
      */
     public String informacionCuenta(String IBAN) {
         for (int i = 0; i < contador; i++) {
-            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+            if (cuentasBancarias[i].numeroCuenta.equals(IBAN)) {
                 return cuentasBancarias[i].devolverInfoString();
             }
         }
@@ -84,7 +97,7 @@ public class Banco {
      */
     public boolean ingresoCuenta(String IBAN, double cantidadAIngresar) {
         for (int i = 0; i < contador; i++) {
-            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+            if (cuentasBancarias[i].numeroCuenta.equals(IBAN)) {
                 cuentasBancarias[i].saldo += cantidadAIngresar;
                 return true;
             }
@@ -103,7 +116,7 @@ public class Banco {
      */
     public boolean retiradaCuenta(String IBAN, double cantidadARetirar) {
         for (int i = 0; i < contador; i++) {
-            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+            if (cuentasBancarias[i].numeroCuenta.equals(IBAN)) {
                 cuentasBancarias[i].saldo -= cantidadARetirar;
                 return true;
             }
@@ -120,11 +133,11 @@ public class Banco {
      */
     public double obtenerSaldo(String IBAN) {
         for (int i = 0; i < contador; i++) {
-            if(cuentasBancarias[i].numeroCuenta.equals(IBAN)){
+            if (cuentasBancarias[i].numeroCuenta.equals(IBAN)) {
                 return cuentasBancarias[i].saldo;
             }
         }
         return -1;
-    }   
+    }
 
 }

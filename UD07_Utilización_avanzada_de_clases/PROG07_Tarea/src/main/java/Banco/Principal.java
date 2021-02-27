@@ -15,6 +15,7 @@ public class Principal {
      * @param args the command line arguments
      */
     
+    // Instanciamos la clase Banco y creamos el objeto banco.
     private static Banco banco = new Banco();
     
     public static void main(String[] args) {
@@ -22,6 +23,8 @@ public class Principal {
         accionMenuPrincipal();
     }
     
+    
+    // Método para seleccionar una opción del menú.
     private static void accionMenuPrincipal(){
         int op = -1;
         while(true){
@@ -32,6 +35,7 @@ public class Principal {
         seleccionarOpcionMenu(op);
     }
     
+    // Método para mostrar el menú principal.
     private static void verMenuPrincipal() {
         System.out.println();
         System.out.println("**********************************************");
@@ -47,12 +51,17 @@ public class Principal {
         System.out.println();
     }
     
+    /**
+     * Método para obtener el número de la opción del menú.
+     * @return int.
+     */
     private static int obtenerOpcionMenu(){
         int opcion = -1;
         opcion = Util.insertarNumero();
         return opcion;
     }
     
+    // Método para redireccionar la opción seleccionada en el menú.
     private static void seleccionarOpcionMenu(int opcion){      
         switch(opcion){
             case 1:
@@ -87,25 +96,28 @@ public class Principal {
         }
     }
     
+    /***
+     * Método para insertar todos los datos del titular de la cuenta bancaria.
+     * @return Persona.
+     */
     private static Persona insertarDatosPersonales(){
         
         String nombre = "";
         String apellidos = "";
-        String dni = "";
+        String dni = null;
         
         System.out.println("Nombre: ");
         nombre = Util.insertarCadena().trim().toUpperCase();
         System.out.println("Apellidos: ");
         apellidos = Util.insertarCadena().trim().toUpperCase();      
-//        while(dni == null || !Util.validarDni(dni)){
-//            System.out.println("DNI: ");
-//            dni = Util.insertarCadena().trim().toUpperCase();
-//        }
-        System.out.println("DNI: ");
-        dni = Util.insertarCadena().trim().toUpperCase();
+        while(dni == null || !Util.validarDni(dni)){
+            System.out.println("DNI: ");
+            dni = Util.insertarCadena().trim().toUpperCase();
+        }
         return new Persona(nombre, apellidos, dni);
     }
     
+    // Método para visualizar el menú para seleccionar el tipo de cuenta.
     private static void verMenuTipoDeCuenta() {
         System.out.println();
         System.out.println("**********************************************");
@@ -116,19 +128,21 @@ public class Principal {
         System.out.println(" 3 - Cuenta corriente de empresa");
         System.out.println();
     }
-        
+    
+    // Método para obtener el número del tipo de cuenta seleccionado.
     private static int obtenerTipoCuenta(){
         int tipoCuenta = -1;
         tipoCuenta = Util.insertarNumero();
         return tipoCuenta;
     }
-           
+     
+    // Método para insertar los datos necesarios para abrir una cuenta bancaria.
     private static void insertarDatosCuenta(){
         
         Persona datosPersonales = insertarDatosPersonales();
         double saldoInicial;
         int tipoCuenta = -1;
-        String numeroDeCuenta = "";
+        String numeroDeCuenta = null;
         
         while(true){
             verMenuTipoDeCuenta();
@@ -138,13 +152,15 @@ public class Principal {
         System.out.println("Saldo Inicial: ");
         saldoInicial = Util.insertarNumeroDecimal();
         
-//        while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
-//            System.out.println("IBAN: ");
-//            numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-//        }
-        System.out.println("IBAN: ");
-        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-             
+        while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
+            System.out.println("IBAN: ");
+            numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+            if(banco.informacionCuenta(numeroDeCuenta) != null){
+                numeroDeCuenta = null;
+                System.out.println("La cuenta ya existe.");
+            }
+        }
+                 
         switch(tipoCuenta){
             case 1: 
                 insertarDatosCuentaDeAhorro(datosPersonales, saldoInicial, numeroDeCuenta);
@@ -159,7 +175,13 @@ public class Principal {
                 break;
         }  
     }
-        
+       
+    /**
+     * Método para insertar los datos necesarios para abrir una cuenta de ahorro.
+     * @param datosPersonales
+     * @param saldoInicial
+     * @param numeroDeCuenta 
+     */
     private static void insertarDatosCuentaDeAhorro(Persona datosPersonales, double saldoInicial, String numeroDeCuenta){
         CuentaBancaria nuevaCuentaBancaria;
         CuentaAhorro nuevaCuentaAhorro = new CuentaAhorro();
@@ -172,12 +194,49 @@ public class Principal {
         nuevaCuentaAhorro.setTipoInteres(tipoInteres);
         nuevaCuentaBancaria = nuevaCuentaAhorro;
         banco.abrirCuenta(nuevaCuentaBancaria);
+        System.out.println("La cuenta de ahorro a sido creada con éxito.");
+        Util.pulsarEnter();
     }
     
+    /**
+     * Método para insertar los entidades autorizadas en las cuentas corrientes.
+     * @return String.
+     */
+    public static String insertarEntidadesAutorizadas(){
+        boolean rep = true;
+        String decision = "";
+        String entidadAutorizada = "";
+        String entidadesAutorizadas = "";
+        while(rep){
+            System.out.println("Deseas añadir una Entidad Autorizada (S/N): ");
+            decision = Util.insertarCadena();
+            if(decision.trim().equalsIgnoreCase("S") || decision.trim().equalsIgnoreCase("N")){
+                if(decision.trim().equalsIgnoreCase("S")){
+                    if(!entidadesAutorizadas.equalsIgnoreCase(""))entidadesAutorizadas = entidadesAutorizadas + ";";
+                    System.out.println("Entidad Autorizada: ");
+                    entidadAutorizada = Util.insertarCadena();
+                    entidadesAutorizadas = entidadesAutorizadas + entidadAutorizada;
+                }else{
+                    rep = false;                            
+                }
+            }else{
+                System.out.println("Respuesta erronea, debes insertar 'S' si quieres añadir o 'N' si no quieres añadir una entidad.");
+            }
+        }
+        return entidadesAutorizadas;
+    }
+    
+    /**
+     * Método para insertar los datos necesarios para abrir una cuenta corriente personal.
+     * @param datosPersonales
+     * @param saldoInicial
+     * @param numeroDeCuenta 
+     */
     private static void insertarDatosCuentaCorrientePersonal(Persona datosPersonales, double saldoInicial, String numeroDeCuenta){
         CuentaBancaria nuevaCuentaBancaria;
         CuentaCorrientePersonal nuevaCuentaCorrientePersonal = new CuentaCorrientePersonal();
         double comisionDeMantenimiento = -1;
+        nuevaCuentaCorrientePersonal.entidadesAutorizadas = insertarEntidadesAutorizadas();
         System.out.println("Comisión de mantenimiento: ");
         comisionDeMantenimiento = Util.insertarNumeroDecimal();
         nuevaCuentaCorrientePersonal.titular = datosPersonales;
@@ -186,14 +245,18 @@ public class Principal {
         nuevaCuentaCorrientePersonal.setComisionMantenimiento(comisionDeMantenimiento);
         nuevaCuentaBancaria = nuevaCuentaCorrientePersonal;
         banco.abrirCuenta(nuevaCuentaBancaria);
+        System.out.println("La cuenta corriente personal a sido creada con éxito.");
+        Util.pulsarEnter();
     }
     
+    // Método para insertar los datos necesarios para abrir una cuenta corriente de empresa.
     private static void insertarDatosCuentaCorrienteDeEmpresa(Persona datosPersonales, double saldoInicial, String numeroDeCuenta){
         CuentaBancaria nuevaCuentaBancaria;
         CuentaCorrienteEmpresa nuevaCuentaCorrienteDeEmpresa = new CuentaCorrienteEmpresa();
         double maxDescubiertoPermitido = -1;
         double tipoInteresPorDescubierto = -1;
         double comisionFijaPorDescubierto = -1;
+        nuevaCuentaCorrienteDeEmpresa.entidadesAutorizadas = insertarEntidadesAutorizadas();
         System.out.println("Máximo descubierto permitido: ");
         maxDescubiertoPermitido = Util.insertarNumeroDecimal();
         System.out.println("Tipo de interés por descubierto: ");
@@ -208,72 +271,117 @@ public class Principal {
         nuevaCuentaCorrienteDeEmpresa.setComisionFijaPorDescubierto(comisionFijaPorDescubierto);
         nuevaCuentaBancaria = nuevaCuentaCorrienteDeEmpresa;
         banco.abrirCuenta(nuevaCuentaBancaria);
+        System.out.println("La cuenta corriente de empresa a sido creada con éxito.");
+        Util.pulsarEnter();
     }
     
+    // Método para listar las cuentas del banco.
     private static void listarCuentas(){
         String[] cuentas = banco.listadoCuentas();
+        int inicio  = -1;
+        int fin = -1;
         for(int i = 0; i < cuentas.length; i++){
-                System.out.println(cuentas[i]);
-                
+                inicio = cuentas[i].indexOf("Persona{");
+                fin = cuentas[i].indexOf("[");
+                System.out.println(cuentas[i].substring(inicio, fin));              
         }
+        Util.pulsarEnter();
     }
     
+    // Método para obtener una cuenta indicandole el IBAN.
     private static void obtenerDatosCuenta(){
         String datos = "";
-        String numeroDeCuenta = "";
-        System.out.println("IBAN: ");
-        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+        String numeroDeCuenta = null;
+        while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
+            System.out.println("IBAN: ");
+            numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();         
+        }
         datos = banco.informacionCuenta(numeroDeCuenta);
         if(datos != null){
             System.out.println(datos);
+            Util.pulsarEnter();
         }else{
             System.out.println("La cuenta no existe.");
+            Util.pulsarEnter();
         }
     }
     
+    // Método para realizar un ingreso en una cuenta indicando el IBAN y la cantidad a ingresar.
     private static void realizarIngreso(){
         boolean exito = false;
-        String numeroDeCuenta = "";
+        String numeroDeCuenta = null;
         double ingreso = 0;
-        System.out.println("IBAN: ");
-        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-        System.out.println("Ingreso: ");
-        ingreso = Util.insertarNumeroDecimal();
-        exito = banco.ingresoCuenta(numeroDeCuenta, ingreso);
-        if(exito){
-            System.out.println("Ingreso realizado con exito.");
-        }else{
-            System.out.println("Error al realizar el ingreso.");
+        while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
+            System.out.println("IBAN: ");
+            numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+            if(banco.informacionCuenta(numeroDeCuenta) != null){
+                System.out.println("Ingreso: ");
+                ingreso = Util.insertarNumeroDecimal();
+                exito = banco.ingresoCuenta(numeroDeCuenta, ingreso);
+                if(exito){
+                    System.out.println("Ingreso realizado con exito.");
+                    Util.pulsarEnter();
+                }else{
+                    System.out.println("Error al realizar el ingreso.");
+                    Util.pulsarEnter();
+                }
+            }else{
+                System.out.println("La cuenta no existe.");
+                Util.pulsarEnter();
+            }
+        }
+        
+    }
+    
+    // Método para realizar una retirada en una cuenta indicando el IBAN y la cantidad a retirar.
+    private static void realizarRetirada(){
+        boolean exito = false;
+        String numeroDeCuenta = null;
+        double retirar = 0;
+        while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
+            System.out.println("IBAN: ");
+            numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+            if(banco.informacionCuenta(numeroDeCuenta) != null){
+                System.out.println("Retirar: ");
+                retirar = Util.insertarNumeroDecimal();
+                exito = banco.retiradaCuenta(numeroDeCuenta, retirar);
+                if(exito){
+                    System.out.println("Retirada realizada con exito.");
+                    Util.pulsarEnter();
+                }else{
+                    System.out.println("Error al realizar la retirada.");
+                    Util.pulsarEnter();
+                }
+            }
+            else{
+                System.out.println("La cuenta no existe.");
+                Util.pulsarEnter();
+            }
         }
     }
     
-    private static void realizarRetirada(){
-        boolean exito = false;
-        String numeroDeCuenta = "";
-        double retirar = 0;
-        System.out.println("IBAN: ");
-        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-        System.out.println("Retirar: ");
-        retirar = Util.insertarNumeroDecimal();
-        exito = banco.retiradaCuenta(numeroDeCuenta, retirar);
-        if(exito){
-            System.out.println("Retirada realizada con exito.");
-        }else{
-            System.out.println("Error al realizar la retirada.");
-        }
-    }
-        
+    // Método para obtener el saldo de una cuenta indicando el IBAN.
     private static void obtenerSaldoCuenta(){
         double saldo = 0;
-        String numeroDeCuenta = "";
-        System.out.println("IBAN: ");
-        numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-        saldo = banco.obtenerSaldo(numeroDeCuenta);
-        if(saldo != -1){
-            System.out.println(saldo);
-        }else{
-            System.out.println("Error al obtener el saldo.");
-        }
+        String numeroDeCuenta = null;
+        while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
+            System.out.println("IBAN: ");
+            numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
+            if(banco.informacionCuenta(numeroDeCuenta) != null){
+                saldo = banco.obtenerSaldo(numeroDeCuenta);
+                if(saldo != -1){
+                    System.out.println(saldo);
+                    Util.pulsarEnter();
+                }else{
+                    System.out.println("Error al obtener el saldo.");
+                    Util.pulsarEnter();
+                }
+            }
+            else{
+                System.out.println("La cuenta no existe.");
+                Util.pulsarEnter();
+            }
+        }    
     }
 
         

@@ -50,7 +50,9 @@ public class CuentaAhorro extends CuentaBancaria {
         sb.append("CuentaAhorro{").append(titular.devolverInfoString());
         sb.append(", numeroCuenta=").append(numeroCuenta);
         sb.append(", saldo=").append(saldo);
-        sb.append(", tipoInteres=").append(tipoInteres);
+        sb.append(" [ ");
+        sb.append("tipoInteres=").append(tipoInteres);
+        sb.append(" ]");
         sb.append('}');
         return sb.toString();
     }
