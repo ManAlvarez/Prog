@@ -7,10 +7,17 @@ package Banco;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Interfaz pública accesible desde la misma clase, una subclase
+ * el mismo paquete y desde otro paquete.
  */
 public interface Imprimible {
-    
+
+    /**
+     * Método accesible desde la misma clase, una subclase el mismo paquete y
+     * desde otro paquete.
+     *
+     * @return String.
+     */
     public String devolverInfoString();
-    
+
 }

@@ -7,10 +7,14 @@ package Banco;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Clase abstracta pública accesible desde la misma clase, una
+ * subclase el mismo paquete y desde otro paquete que hereda de la clase Cuenta
+ * Bancaria todos los atributos y métodos.
+ *
  */
-public abstract class CuentaCorriente extends CuentaBancaria{
-    
+public abstract class CuentaCorriente extends CuentaBancaria {
+
+    // Atributo declarado como protected, no es accesibles desde otro paquete.
     protected String entidadesAutorizadas;
 
 }

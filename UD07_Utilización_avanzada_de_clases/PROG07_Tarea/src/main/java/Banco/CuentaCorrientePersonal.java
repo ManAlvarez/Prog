@@ -7,55 +7,43 @@ package Banco;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Clase publica para que sea accedible desde fuera de la clase,
+ * que hereda de la clase abstracta CuentaCorriente todos sus metodos y
+ * atributos.
  */
-public class CuentaCorrientePersonal extends CuentaCorriente{
-    
-    protected double comisionMantenimiento;
+public class CuentaCorrientePersonal extends CuentaCorriente {
 
+    // Atributo declarado como private, solo accesible desde la clase.
+    private double comisionMantenimiento;
+
+    // Constructor.
     public CuentaCorrientePersonal() {
     }
 
+    /**
+     * Devuelve la comisión de mantenimiento de la cuenta corriente personal.
+     *
+     * @return double.
+     */
     public double getComisionMantenimiento() {
         return comisionMantenimiento;
     }
 
+    /**
+     * Actualiza la comisión de mantenimiento.
+     *
+     * @param comisionMantenimiento
+     */
     public void setComisionMantenimiento(double comisionMantenimiento) {
         this.comisionMantenimiento = comisionMantenimiento;
     }
 
-    public String getEntidadesAutorizadas() {
-        return entidadesAutorizadas;
-    }
-
-    public void setEntidadesAutorizadas(String entidadesAutorizadas) {
-        this.entidadesAutorizadas = entidadesAutorizadas;
-    }
-
-    public Persona getTitular() {
-        return titular;
-    }
-
-    public void setTitular(Persona titular) {
-        this.titular = titular;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public String getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
-    
+    /**
+     * Sobrescribe el método de la interfaz Imprimible que heredamos de la clase
+     * padre con los datos de la cuenta corriente personal.
+     *
+     * @return
+     */
     @Override
     public String devolverInfoString() {
         StringBuilder sb = new StringBuilder();
@@ -66,5 +54,5 @@ public class CuentaCorrientePersonal extends CuentaCorriente{
         sb.append('}');
         return sb.toString();
     }
-    
+
 }

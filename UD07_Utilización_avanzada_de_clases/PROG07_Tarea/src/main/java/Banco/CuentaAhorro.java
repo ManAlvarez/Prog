@@ -7,51 +7,43 @@ package Banco;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Clase publica para que sea accedible desde fuera de la clase,
+ * que hereda de la clase abstracta CuentaBancaria todos sus métodos y
+ * atributos.
  */
 public class CuentaAhorro extends CuentaBancaria {
 
-    protected double tipoInteres;
+    // Atributo declarado como private, solo accesible desde la clase.
+    private double tipoInteres;
 
+    // Constructor.
     public CuentaAhorro() {
     }
-    
-    public CuentaAhorro(double tipoInteres) {
-        this.tipoInteres = tipoInteres;
-    }
 
+    /**
+     * Devuelve el tipo de interes de la cuenta de ahorro.
+     *
+     * @return double.
+     */
     public double getTipoInteres() {
         return tipoInteres;
     }
 
+    /**
+     * Actualiza el tipo de interes.
+     *
+     * @param tipoInteres
+     */
     public void setTipoInteres(double tipoInteres) {
         this.tipoInteres = tipoInteres;
     }
 
-    public Persona getTitular() {
-        return titular;
-    }
-
-    public void setTitular(Persona titular) {
-        this.titular = titular;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public String getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
-
+    /**
+     * Sobrescribe el método de la interfaz que heredamos de la clase padre con
+     * los datos de la cuenta de ahorro.
+     *
+     * @return String.
+     */
     @Override
     public String devolverInfoString() {
         StringBuilder sb = new StringBuilder();

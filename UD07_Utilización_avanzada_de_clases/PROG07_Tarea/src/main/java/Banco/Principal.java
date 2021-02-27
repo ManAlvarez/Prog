@@ -166,9 +166,9 @@ public class Principal {
         double tipoInteres = -1;
         System.out.println("Tipo de interés: ");
         tipoInteres = Util.insertarNumeroDecimal();
-        nuevaCuentaAhorro.setTitular(datosPersonales);
-        nuevaCuentaAhorro.setSaldo(saldoInicial);
-        nuevaCuentaAhorro.setNumeroCuenta(numeroDeCuenta);
+        nuevaCuentaAhorro.titular = datosPersonales;
+        nuevaCuentaAhorro.saldo = saldoInicial;
+        nuevaCuentaAhorro.numeroCuenta = numeroDeCuenta;
         nuevaCuentaAhorro.setTipoInteres(tipoInteres);
         nuevaCuentaBancaria = nuevaCuentaAhorro;
         banco.abrirCuenta(nuevaCuentaBancaria);
@@ -180,9 +180,9 @@ public class Principal {
         double comisionDeMantenimiento = -1;
         System.out.println("Comisión de mantenimiento: ");
         comisionDeMantenimiento = Util.insertarNumeroDecimal();
-        nuevaCuentaCorrientePersonal.setTitular(datosPersonales);
-        nuevaCuentaCorrientePersonal.setSaldo(saldoInicial);
-        nuevaCuentaCorrientePersonal.setNumeroCuenta(numeroDeCuenta);
+        nuevaCuentaCorrientePersonal.titular = datosPersonales;
+        nuevaCuentaCorrientePersonal.saldo = saldoInicial;
+        nuevaCuentaCorrientePersonal.numeroCuenta = numeroDeCuenta;
         nuevaCuentaCorrientePersonal.setComisionMantenimiento(comisionDeMantenimiento);
         nuevaCuentaBancaria = nuevaCuentaCorrientePersonal;
         banco.abrirCuenta(nuevaCuentaBancaria);
@@ -200,9 +200,9 @@ public class Principal {
         tipoInteresPorDescubierto = Util.insertarNumeroDecimal();
         System.out.println("Comisión fija por cada descubierto: ");
         comisionFijaPorDescubierto = Util.insertarNumeroDecimal();
-        nuevaCuentaCorrienteDeEmpresa.setTitular(datosPersonales);
-        nuevaCuentaCorrienteDeEmpresa.setSaldo(saldoInicial);
-        nuevaCuentaCorrienteDeEmpresa.setNumeroCuenta(numeroDeCuenta);
+        nuevaCuentaCorrienteDeEmpresa.titular = datosPersonales;
+        nuevaCuentaCorrienteDeEmpresa.saldo = saldoInicial;
+        nuevaCuentaCorrienteDeEmpresa.numeroCuenta = numeroDeCuenta;
         nuevaCuentaCorrienteDeEmpresa.setMaxDescubiertoPermitido(maxDescubiertoPermitido);
         nuevaCuentaCorrienteDeEmpresa.setTipoInteresDescubierto(tipoInteresPorDescubierto);
         nuevaCuentaCorrienteDeEmpresa.setComisionFijaPorDescubierto(comisionFijaPorDescubierto);

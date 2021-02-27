@@ -7,12 +7,15 @@ package Banco;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Clase abstracta pública accesible desde la misma clase, una
+ * subclase el mismo paquete y desde otro paquete que implementa la interfaz
+ * Imprimible y contiene en su atributos un objeto de la clase Persona.
  */
-public abstract class CuentaBancaria implements Imprimible{
-    
+public abstract class CuentaBancaria implements Imprimible {
+
+    // Atributos declarados como protected, no son accesibles desde otro paquete.
     protected Persona titular;
     protected double saldo;
     protected String numeroCuenta;
-    
+
 }
