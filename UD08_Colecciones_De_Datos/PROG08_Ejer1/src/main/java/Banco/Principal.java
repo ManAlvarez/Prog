@@ -30,7 +30,7 @@ public class Principal {
         while(true){
             verMenuPrincipal();
             op = obtenerOpcionMenu();
-            if(op != -1 && op >= 1 && op <= 7) break;
+            if(op != -1 && op >= 1 && op <= 8) break;
         }
         seleccionarOpcionMenu(op);
     }
@@ -47,7 +47,8 @@ public class Principal {
         System.out.println(" 4 - Realizar un ingreso en una cuenta");
         System.out.println(" 5 - Retirar efectivo de una cuenta");
         System.out.println(" 6 - Consultar el saldo actual de una cuenta");
-        System.out.println(" 7 - Salir de la aplicación");
+        System.out.println(" 7 - Eliminar Cuenta Bancaria");
+        System.out.println(" 8 - Salir de la aplicación");
         System.out.println();
     }
     
@@ -89,6 +90,10 @@ public class Principal {
                 accionMenuPrincipal();
                 break;
             case 7:
+                eliminarCuenta();
+                accionMenuPrincipal();
+                break;
+            case 8:
                 System.exit(0);                
                 break;
             default:
@@ -314,23 +319,22 @@ public class Principal {
         while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
             System.out.println("IBAN: ");
             numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-            if(banco.informacionCuenta(numeroDeCuenta) != null){
-                System.out.println("Ingreso: ");
-                ingreso = Util.insertarNumeroDecimal();
-                exito = banco.ingresoCuenta(numeroDeCuenta, ingreso);
-                if(exito){
-                    System.out.println("Ingreso realizado con exito.");
-                    Util.pulsarEnter();
-                }else{
-                    System.out.println("Error al realizar el ingreso.");
-                    Util.pulsarEnter();
-                }
+        }
+        if(banco.informacionCuenta(numeroDeCuenta) != null){
+            System.out.println("Ingreso: ");
+            ingreso = Util.insertarNumeroDecimal();
+            exito = banco.ingresoCuenta(numeroDeCuenta, ingreso);
+            if(exito){
+                System.out.println("Ingreso realizado con exito.");
+                Util.pulsarEnter();
             }else{
-                System.out.println("La cuenta no existe.");
+                System.out.println("Error al realizar el ingreso.");
                 Util.pulsarEnter();
             }
-        }
-        
+        }else{
+            System.out.println("La cuenta no existe.");
+            Util.pulsarEnter();
+        }           
     }
     
     // Método para realizar una retirada en una cuenta indicando el IBAN y la cantidad a retirar.
@@ -341,23 +345,23 @@ public class Principal {
         while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
             System.out.println("IBAN: ");
             numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-            if(banco.informacionCuenta(numeroDeCuenta) != null){
-                System.out.println("Retirar: ");
-                retirar = Util.insertarNumeroDecimal();
-                exito = banco.retiradaCuenta(numeroDeCuenta, retirar);
-                if(exito){
-                    System.out.println("Retirada realizada con exito.");
-                    Util.pulsarEnter();
-                }else{
-                    System.out.println("Error al realizar la retirada.");
-                    Util.pulsarEnter();
-                }
-            }
-            else{
-                System.out.println("La cuenta no existe.");
+        }
+        if(banco.informacionCuenta(numeroDeCuenta) != null){
+            System.out.println("Retirar: ");
+            retirar = Util.insertarNumeroDecimal();
+            exito = banco.retiradaCuenta(numeroDeCuenta, retirar);
+            if(exito){
+                System.out.println("Retirada realizada con exito.");
+                Util.pulsarEnter();
+            }else{
+                System.out.println("Error al realizar la retirada.");
                 Util.pulsarEnter();
             }
         }
+        else{
+            System.out.println("La cuenta no existe.");
+            Util.pulsarEnter();
+        }      
     }
     
     // Método para obtener el saldo de una cuenta indicando el IBAN.
@@ -367,21 +371,55 @@ public class Principal {
         while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
             System.out.println("IBAN: ");
             numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();
-            if(banco.informacionCuenta(numeroDeCuenta) != null){
-                saldo = banco.obtenerSaldo(numeroDeCuenta);
+        }
+        if(banco.informacionCuenta(numeroDeCuenta) != null){
+            saldo = banco.obtenerSaldo(numeroDeCuenta);
+            if(saldo != -1){
+                System.out.println(saldo);
+                Util.pulsarEnter();
+            }else{
+                System.out.println("Error al obtener el saldo.");
+                Util.pulsarEnter();
+            }
+        }
+        else{
+            System.out.println("La cuenta no existe.");
+            Util.pulsarEnter();
+        }      
+    }
+    
+    // Método para eliminar una cuenta existente con saldo 0 indicando el IBAN.
+    private static void eliminarCuenta(){
+        String datos = "";
+        double saldo = 0;
+        String numeroDeCuenta = null;
+        while(numeroDeCuenta == null || !Util.validarIBAN(numeroDeCuenta)){
+            System.out.println("IBAN: ");
+            numeroDeCuenta = Util.insertarCadena().trim().toUpperCase();         
+        }
+        datos = banco.informacionCuenta(numeroDeCuenta);
+        if(datos != null){
+            saldo = banco.obtenerSaldo(numeroDeCuenta);
                 if(saldo != -1){
-                    System.out.println(saldo);
-                    Util.pulsarEnter();
+                    if(saldo == 0){
+                        banco.eliminarCuenta(numeroDeCuenta);
+                        System.out.println("La cuenta ha sido elimanda con éxito.");
+                        Util.pulsarEnter();
+                    }else if (saldo < 0){
+                        System.out.println("No se puede eliminar cuentas con saldo negativo.");
+                        Util.pulsarEnter();                  
+                    }else if (saldo > 0){
+                        System.out.println("No se puede eliminar cuentas con saldo positivo.");
+                        Util.pulsarEnter();
+                    }
                 }else{
                     System.out.println("Error al obtener el saldo.");
                     Util.pulsarEnter();
                 }
-            }
-            else{
-                System.out.println("La cuenta no existe.");
-                Util.pulsarEnter();
-            }
-        }    
+        }else{
+            System.out.println("La cuenta no existe.");
+            Util.pulsarEnter();
+        }
     }
 
         

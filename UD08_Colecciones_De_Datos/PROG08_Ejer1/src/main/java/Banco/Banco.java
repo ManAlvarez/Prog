@@ -16,9 +16,17 @@ public class Banco {
 
     // Atributos declarados como private, solo accesibles desde la clase. 
     // ArrayList para almacenar todas las cuentas que creamos.
+    
+    /* Justificación:
+    
+        1. Los ArrayList son más rápidos en cuanto a acceso a los elementos.
+        2. Si no se van a realizar muchas eliminaciones, sino que solamente 
+        se van a insertar y consultar elementos por posición, conviene usar 
+        una lista basada en arrays redimensionados (ArrayList).
+    
+    */
+    
     private ArrayList<CuentaBancaria> cuentasBancarias = new ArrayList<CuentaBancaria>();
-    // Contador para dimensinar el array.
-    private static int contador = 0;
 
     // Constructor.
     public Banco() {
@@ -26,6 +34,7 @@ public class Banco {
 
     /**
      * Devuelve un ArrayList con las cuentas bancarias del banco.
+     *
      * @return ArrayList.
      */
     public ArrayList<CuentaBancaria> getCuentasBancarias() {
@@ -34,7 +43,8 @@ public class Banco {
 
     /**
      * Actualiza el ArrayList de cuentas bancarias.
-     * @param cuentasBancarias 
+     *
+     * @param cuentasBancarias
      */
     public void setCuentasBancarias(ArrayList<CuentaBancaria> cuentasBancarias) {
         this.cuentasBancarias = cuentasBancarias;
@@ -58,9 +68,9 @@ public class Banco {
      *
      * @return String[].
      */
-     public String[] listadoCuentas() {
+    public String[] listadoCuentas() {
         String[] cuentas = new String[cuentasBancarias.size()];
-        for(CuentaBancaria cuentaBancariaAux: cuentasBancarias){
+        for (CuentaBancaria cuentaBancariaAux : cuentasBancarias) {
             cuentas[cuentasBancarias.indexOf(cuentaBancariaAux)] = cuentaBancariaAux.devolverInfoString();
         }
         return cuentas;
@@ -74,8 +84,8 @@ public class Banco {
      * @return true or false.
      */
     public String informacionCuenta(String IBAN) {
-        for(CuentaBancaria cuentaBancariaAux:cuentasBancarias){
-            if(cuentaBancariaAux.numeroCuenta.equals(IBAN)){
+        for (CuentaBancaria cuentaBancariaAux : cuentasBancarias) {
+            if (cuentaBancariaAux.numeroCuenta.equals(IBAN)) {
                 return cuentaBancariaAux.devolverInfoString();
             }
         }
@@ -92,8 +102,8 @@ public class Banco {
      * @return true or false.
      */
     public boolean ingresoCuenta(String IBAN, double cantidadAIngresar) {
-        for(CuentaBancaria cuentaBancariaAux:cuentasBancarias){
-            if(cuentaBancariaAux.numeroCuenta.equals(IBAN)){
+        for (CuentaBancaria cuentaBancariaAux : cuentasBancarias) {
+            if (cuentaBancariaAux.numeroCuenta.equals(IBAN)) {
                 cuentaBancariaAux.saldo += cantidadAIngresar;
                 return true;
             }
@@ -111,8 +121,8 @@ public class Banco {
      * @return true or false;
      */
     public boolean retiradaCuenta(String IBAN, double cantidadARetirar) {
-        for(CuentaBancaria cuentaBancariaAux:cuentasBancarias){
-            if(cuentaBancariaAux.numeroCuenta.equals(IBAN)){
+        for (CuentaBancaria cuentaBancariaAux : cuentasBancarias) {
+            if (cuentaBancariaAux.numeroCuenta.equals(IBAN)) {
                 cuentaBancariaAux.saldo -= cantidadARetirar;
                 return true;
             }
@@ -125,15 +135,32 @@ public class Banco {
      * En caso contrario devuelve -1
      *
      * @param IBAN
-     * @return
+     * @return double.
      */
     public double obtenerSaldo(String IBAN) {
-        for(CuentaBancaria cuentaBancariaAux:cuentasBancarias){
-            if(cuentaBancariaAux.numeroCuenta.equals(IBAN)){
+        for (CuentaBancaria cuentaBancariaAux : cuentasBancarias) {
+            if (cuentaBancariaAux.numeroCuenta.equals(IBAN)) {
                 return cuentaBancariaAux.saldo;
             }
         }
         return -1;
+    }
+
+    /**
+     * Recibe un iban por parámetro y elimina la cuenta de la lista si la cuenta
+     * existe.
+     *
+     * @param IBAN
+     * @return
+     */
+    public boolean eliminarCuenta(String IBAN) {
+        for (CuentaBancaria cuentaBancariaAux : cuentasBancarias) {
+            if (cuentaBancariaAux.numeroCuenta.equals(IBAN)) {
+                cuentasBancarias.remove(cuentaBancariaAux);
+                return true;
+            }
+        }
+        return false;
     }
 
 }
