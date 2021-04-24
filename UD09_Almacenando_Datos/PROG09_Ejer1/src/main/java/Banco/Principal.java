@@ -96,6 +96,8 @@ public class Principal {
                 accionMenuPrincipal();
                 break;
             case 8:
+                banco.listarClientes();
+                Util.pulsarEnter();
                 accionMenuPrincipal();               
                 break;
             case 9:

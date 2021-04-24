@@ -5,9 +5,12 @@
  */
 package Banco;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,6 +39,7 @@ public class Banco {
     private ArrayList<CuentaBancaria> cuentasBancarias = new ArrayList<CuentaBancaria>();
     private ObjectInputStream lectorDeObjetos;
     private ObjectOutputStream escritorDeObjetos;
+    private BufferedWriter escritura;
 
     // Constructor.
     public Banco() {
@@ -178,6 +182,7 @@ public class Banco {
         try {
             escritorDeObjetos = new ObjectOutputStream(new FileOutputStream("datoscuentasbancarias.dat"));
             escritorDeObjetos.writeObject(cuentasBancarias);
+            escritorDeObjetos.close();
         } catch (IOException ex) {
             Logger.getLogger(Banco.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -188,11 +193,29 @@ public class Banco {
         try {
             lectorDeObjetos = new ObjectInputStream(new FileInputStream("datoscuentasbancarias.dat"));
             cuentasBancarias = (ArrayList<CuentaBancaria>) lectorDeObjetos.readObject();
+            lectorDeObjetos.close();
         } catch (FileNotFoundException ex) {
             System.out.println("No hay datos.");
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Banco.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    // Método para listar el nombre y la número de las cuentas bancaria de cada cliente y guardarlo en un archivo de texto.
+    public void listarClientes() {
+        try {
+            escritura = new BufferedWriter(new FileWriter(new File("ListadoClientesCCC.txt")));
+            for (CuentaBancaria cuentaBancariaAux : cuentasBancarias) {
+                escritura.write("Nombre: " + cuentaBancariaAux.titular.getNombre() + " | CCC: " + cuentaBancariaAux.numeroCuenta);
+                escritura.newLine();
+            }
+            escritura.write("Número total de cuentas: " + cuentasBancarias.size() + "");
+            escritura.close();
+            System.out.println("ListadoClientesCCC.txt creado con éxito.");
+        } catch (IOException ex) {
+            Logger.getLogger(Banco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
