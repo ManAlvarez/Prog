@@ -5,8 +5,16 @@
  */
 package Banco;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +34,8 @@ public class Banco {
     
      */
     private ArrayList<CuentaBancaria> cuentasBancarias = new ArrayList<CuentaBancaria>();
+    private ObjectInputStream lectorDeObjetos;
+    private ObjectOutputStream escritorDeObjetos;
 
     // Constructor.
     public Banco() {
@@ -161,6 +171,28 @@ public class Banco {
             }
         }
         return false;
+    }
+
+    // Método que escribe una lista de cuentas bancarias en un archivo.
+    public void escribirObjeto() {
+        try {
+            escritorDeObjetos = new ObjectOutputStream(new FileOutputStream("datoscuentasbancarias.dat"));
+            escritorDeObjetos.writeObject(cuentasBancarias);
+        } catch (IOException ex) {
+            Logger.getLogger(Banco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    // Método que almacena en la lista cuentasBancarias lo que lee de un archivo.
+    public void leerObjeto() {
+        try {
+            lectorDeObjetos = new ObjectInputStream(new FileInputStream("datoscuentasbancarias.dat"));
+            cuentasBancarias = (ArrayList<CuentaBancaria>) lectorDeObjetos.readObject();
+        } catch (FileNotFoundException ex) {
+            System.out.println("No hay datos.");
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Banco.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

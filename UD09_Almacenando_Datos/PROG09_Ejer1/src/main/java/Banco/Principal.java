@@ -20,6 +20,7 @@ public class Principal {
     
     public static void main(String[] args) {
         // TODO code application logic here
+        banco.leerObjeto();
         accionMenuPrincipal();
     }
     
@@ -30,7 +31,7 @@ public class Principal {
         while(true){
             verMenuPrincipal();
             op = obtenerOpcionMenu();
-            if(op != -1 && op >= 1 && op <= 8) break;
+            if(op != -1 && op >= 1 && op <= 9) break;
         }
         seleccionarOpcionMenu(op);
     }
@@ -48,7 +49,8 @@ public class Principal {
         System.out.println(" 5 - Retirar efectivo de una cuenta");
         System.out.println(" 6 - Consultar el saldo actual de una cuenta");
         System.out.println(" 7 - Eliminar Cuenta Bancaria");
-        System.out.println(" 8 - Salir de la aplicación");
+        System.out.println(" 8 - Listado clientes");
+        System.out.println(" 9 - Salir de la aplicación");
         System.out.println();
     }
     
@@ -94,6 +96,10 @@ public class Principal {
                 accionMenuPrincipal();
                 break;
             case 8:
+                accionMenuPrincipal();               
+                break;
+            case 9:
+                banco.escribirObjeto();
                 System.exit(0);                
                 break;
             default:

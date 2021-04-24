@@ -5,12 +5,14 @@
  */
 package Banco;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Manuel Clase publica para que sea accedible desde fuera de la clase,
  * que implementa la interfaz Imprimible y sus métodos.
  */
-public class Persona implements Imprimible {
+public class Persona implements Imprimible, Serializable {
 
     //Atributos encapsulados de la clase.
     private String nombre;

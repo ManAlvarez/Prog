@@ -5,6 +5,8 @@
  */
 package Banco;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Manuel Clase abstracta pública accesible desde la misma clase, una
@@ -12,7 +14,7 @@ package Banco;
  * Bancaria todos los atributos y métodos.
  *
  */
-public abstract class CuentaCorriente extends CuentaBancaria {
+public abstract class CuentaCorriente extends CuentaBancaria implements Serializable {
 
     // Atributo declarado como protected, no es accesibles desde otro paquete.
     protected String entidadesAutorizadas;

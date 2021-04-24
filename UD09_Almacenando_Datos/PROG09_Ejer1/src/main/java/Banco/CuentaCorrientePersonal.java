@@ -5,13 +5,15 @@
  */
 package Banco;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Manuel Clase publica para que sea accedible desde fuera de la clase,
  * que hereda de la clase abstracta CuentaCorriente todos sus metodos y
  * atributos.
  */
-public class CuentaCorrientePersonal extends CuentaCorriente {
+public class CuentaCorrientePersonal extends CuentaCorriente implements Serializable {
 
     // Atributo declarado como private, solo accesible desde la clase.
     private double comisionMantenimiento;
