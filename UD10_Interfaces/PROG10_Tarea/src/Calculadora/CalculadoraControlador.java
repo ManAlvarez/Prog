@@ -21,195 +21,215 @@ public class CalculadoraControlador implements Initializable {
 
     @FXML
     private TextField tfPantalla, tfResultado;
-    private int primerEntero, segundoEntero, resultado;
-    private boolean sumaClick, restaClick, multiClick, divClick, igualClick;
+    private int digito, num1, num2, numInsert, resultado;
+    private boolean clickSum, clickRest, clickMult, clickDiv, clickIgual, clickOp;
+    private String operador;
 
     @FXML
     public void button0Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "0");
+        digito = 0;
+        addNumero();
     }
 
     @FXML
     private void button1Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "1");
-
+        digito = 1;
+        addNumero();
     }
 
     @FXML
     private void button2Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "2");
+        digito = 2;
+        addNumero();
     }
 
     @FXML
     private void button3Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "3");
+        digito = 3;
+        addNumero();
     }
 
     @FXML
     private void button4Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "4");
+        digito = 4;
+        addNumero();
     }
 
     @FXML
     private void button5Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "5");
+        digito = 5;
+        addNumero();
     }
 
     @FXML
     private void button6Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "6");
+        digito = 6;
+        addNumero();
     }
 
     @FXML
     private void button7Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "7");
+        digito = 7;
+        addNumero();
     }
 
     @FXML
     private void button8Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "8");
+        digito = 8;
+        addNumero();
     }
 
     @FXML
     private void button9Handler(ActionEvent event) {
-        if (igualClick) {
-            tfResultado.setText("");
-            igualClick = false;
-        }
-        tfResultado.setText(tfResultado.getText() + "9");
+        digito = 9;
+        addNumero();
     }
 
     @FXML
     private void buttonCHandler(ActionEvent event) {
-        tfResultado.setText("");
         tfPantalla.setText("");
-        sumaClick = false;
-        restaClick = false;
-        multiClick = false;
-        divClick = false;
-        igualClick = false;
+        tfResultado.setText("0");
+        operador = "";
+        resultado = 0;
+        num1 = 0;
+        num2 = 0;
+        inicializarClicks();
+        clickOp = true;
     }
 
     @FXML
     private void buttonSumaHandler(ActionEvent event) {
-        if (!sumaClick && !tfResultado.getText().equalsIgnoreCase("")) {
-            primerEntero = Integer.parseInt(String.valueOf(tfResultado.getText()));
-            tfPantalla.setText(tfResultado.getText() + " + ");
-            tfResultado.setText("");
-            sumaClick = true;
-            restaClick = false;
-            multiClick = false;
-            divClick = false;
-            igualClick = false;
-        } 
+        operador = "+";
+        addPrimerNumero(clickSum);
     }
 
     @FXML
     private void buttonRestaHandler(ActionEvent event) {
-        if (!restaClick && !tfResultado.getText().equalsIgnoreCase("")) {
-            primerEntero = Integer.parseInt(String.valueOf(tfResultado.getText()));
-            tfPantalla.setText(tfResultado.getText() + " - ");
-            tfResultado.setText("");
-            sumaClick = false;
-            restaClick = true;
-            multiClick = false;
-            divClick = false;
-            igualClick = false;
-        }
+        operador = "-";
+        addPrimerNumero(clickRest);
     }
 
     @FXML
     private void buttonMultiHandler(ActionEvent event) {
-        if (!multiClick && !tfResultado.getText().equalsIgnoreCase("")) {
-            primerEntero = Integer.parseInt(String.valueOf(tfResultado.getText()));
-            tfPantalla.setText(tfResultado.getText() + " x ");
-            tfResultado.setText("");
-            sumaClick = false;
-            restaClick = false;
-            multiClick = true;
-            divClick = false;
-            igualClick = false;
-        }
+        operador = "*";
+        addPrimerNumero(clickMult);
     }
 
     @FXML
     private void buttonDivHandler(ActionEvent event) {
-        if (!divClick && !tfResultado.getText().equalsIgnoreCase("")) {
-            primerEntero = Integer.parseInt(String.valueOf(tfResultado.getText()));
-            tfPantalla.setText(tfResultado.getText() + " / ");
-            tfResultado.setText("");
-            sumaClick = false;
-            restaClick = false;
-            multiClick = false;
-            divClick = true;
-            igualClick = false;
-        }
+        operador = "/";
+        addPrimerNumero(clickDiv);
     }
 
     @FXML
-    private void buttonIgualHandler(ActionEvent event) {
-        if (!igualClick && !tfResultado.getText().equalsIgnoreCase("")) {
-            segundoEntero = Integer.parseInt(String.valueOf(tfResultado.getText()));
-            operacion();
-            primerEntero = resultado;
-            sumaClick = false;
-            restaClick = false;
-            multiClick = false;
-            divClick = false;
-            igualClick = true;
-            tfPantalla.setText(tfPantalla.getText() + tfResultado.getText() + " = ");
-            tfResultado.setText(String.valueOf(resultado));
+    private boolean buttonIgualHandler(ActionEvent event) {
+        if (!clickIgual) {
+            num2 = Integer.parseInt(String.valueOf(tfResultado.getText()));
+            if (operador.equalsIgnoreCase("/") && num2 == 0) {
+                tfPantalla.setText(String.valueOf("No se puede dividir entre cero"));
+                inicializarClicks();
+                clickOp = true;
+                return false;
+            }
+            numInsert = num2;
+        } else {
+            num2 = numInsert;
+            num1 = resultado;
+        }
+        calcular();
+        tfPantalla.setText(num1 + operador + num2 + " = ");
+        tfResultado.setText(String.valueOf(resultado));
+        clickIgual = true;
+        clickOp = true;
+        return true;
+    }
+
+    private void addPrimerNumero(boolean click) {
+        if (!click) {
+            num1 = Integer.parseInt(String.valueOf(tfResultado.getText()));
+            numInsert = num1;
+            tfPantalla.setText(String.valueOf(num1 + operador));
+        }
+        activarClicks();
+    }
+
+    private void addNumero() {
+        if (!clickOp) {
+            tfResultado.setText(tfResultado.getText() + digito);
+        } else {
+            tfResultado.setText(String.valueOf(digito));
+            inicializarClicks();
         }
     }
 
-    private void operacion() {
-        if (sumaClick) {
-            resultado = primerEntero + segundoEntero;
-        } else if (restaClick) {
-            resultado = primerEntero - segundoEntero;
-        } else if (multiClick) {
-            resultado = primerEntero * segundoEntero;
-        } else if (divClick) {
-            resultado = primerEntero / segundoEntero;
-        } else {
-            resultado = primerEntero;
+    private void calcular() {
+        switch (operador) {
+            case "+":
+                resultado = num1 + num2;
+                break;
+            case "-":
+                resultado = num1 - num2;
+                break;
+            case "*":
+                resultado = num1 * num2;
+                break;
+            case "/":
+                resultado = num1 / num2;
+                break;
+            default:
+                resultado = num1;
+                break;
         }
+    }
+
+    private void activarClicks() {
+        switch (operador) {
+            case "+":
+                clickSum = true;
+                clickRest = false;
+                clickMult = false;
+                clickDiv = false;
+                clickIgual = false;
+                break;
+            case "-":
+                clickSum = false;
+                clickRest = true;
+                clickMult = false;
+                clickDiv = false;
+                clickIgual = false;
+                break;
+            case "*":
+                clickSum = false;
+                clickRest = false;
+                clickMult = true;
+                clickDiv = false;
+                clickIgual = false;
+                break;
+            case "/":
+                clickSum = false;
+                clickRest = false;
+                clickMult = false;
+                clickDiv = true;
+                clickIgual = false;
+                break;
+            default:
+                clickSum = false;
+                clickRest = false;
+                clickMult = false;
+                clickDiv = false;
+                clickIgual = false;
+                break;
+        }
+        clickOp = true;
+    }
+
+    private void inicializarClicks() {
+        clickSum = false;
+        clickRest = false;
+        clickMult = false;
+        clickDiv = false;
+        clickOp = false;
+        clickIgual = false;
     }
 
     /**
