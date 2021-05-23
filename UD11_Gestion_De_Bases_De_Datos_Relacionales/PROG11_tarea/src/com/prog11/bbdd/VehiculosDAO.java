@@ -78,7 +78,7 @@ public class VehiculosDAO {
      */
     public static int updateVehiculo(String matricula, int idPropietario, Connection con) {
         Statement s;
-        // Sentencia SQL para actualizar el propietario de un vehículo donde la mat_veh sea igual al parámetro matricula.
+        // Sentencia SQL para actualizar el propietario de un vehículo donde la mat_veh sea igual al parámetro matrícula.
         String update = "UPDATE " + TABLE
                 + " SET " + COL6 + " = " + idPropietario
                 + " WHERE " + COL1 + " = '" + matricula + "';";
@@ -105,16 +105,16 @@ public class VehiculosDAO {
      * Método para eliminar un vehículos cuyo campo mat_veh se corresponda con
      * el parámetro matricula.
      *
-     * @param maticula
+     * @param matricula
      * @param con
      * @return El número de registros eliminados.
      */
-    public static int deleteVehiculo(String maticula, Connection con) {
+    public static int deleteVehiculo(String matricula, Connection con) {
         int numRegDel = 0;
         Statement s;
-        // Sentencia SQL para eliminar vehículos en la bd donde le campo mat_veh sea igual al parámetro matricula.
+        // Sentencia SQL para eliminar vehículos en la bd donde le campo mat_veh sea igual al parámetro matrícula.
         String delete = "DELETE FROM " + TABLE
-                + " WHERE " + COL1 + " = '" + maticula + "';";
+                + " WHERE " + COL1 + " = '" + matricula + "';";
         try {
             // Preparamos la consulta y la ejecutamos
             // Informamos del número de registros borrados 
