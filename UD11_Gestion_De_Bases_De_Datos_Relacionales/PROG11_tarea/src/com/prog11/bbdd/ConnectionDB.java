@@ -25,8 +25,12 @@ public class ConnectionDB {
         try {
             // Cargar el driver de mysql.
             Class.forName("org.mariadb.jdbc.Driver");
+            // Cadena de conexión para conectar com MariaDB en localhost,
+            // seleccionar la base de datos llamada concesionario
+            // con usuario y contraseña del servidor mariaDB: root y root
+            String connectionUrl = "jdbc:mariadb://localhost:3306/concesionario?user=root&password=root";
             // Obtener la conexion.
-            con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/concesionario?user=root&password=root");
+            con = DriverManager.getConnection(connectionUrl);
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }

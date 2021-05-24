@@ -9,6 +9,7 @@ import static com.prog11.bbdd.PropietariosDAO.existPropietario;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -43,19 +44,25 @@ public class VehiculosDAO {
      * @return 0 si está insertado y -1 si no está insertado.
      */
     public static int insertVehiculo(String matricula, String marca, int kms, float precio, String desc, int idPropietario, Connection con) {
-        // Tipo de sentencia Statement para realizar sentencias sencillas en SQL.
-        Statement s;
+        // Tipo de sentencia PreparedStatement para realizar sentencias SQL con parámetros.
+        PreparedStatement ps;
         // Sentencia SQL para insertar un vehículo en la base de datos.
         String insert = "INSERT INTO " + TABLE
                 + " (" + COL1 + ", " + COL2 + ", " + COL3 + ", " + COL4 + ", " + COL5 + ", " + COL6 + ")"
-                + " VALUES ('" + matricula + "', '" + marca + "', " + kms + ", " + precio + ", '" + desc + "', " + idPropietario + ");";
+                + " VALUES (?,?,?,?,?,?);";
         try {
             if (existPropietario(idPropietario, con) && !existVehiculo(matricula, con)) {
                 // Preparamos la consulta y la ejecutamos.                     
-                s = con.createStatement();
-                s.executeUpdate(insert);
-                // Cerramos el Statement.
-                s.close();
+                ps = con.prepareStatement(insert);
+                ps.setString(1, matricula);
+                ps.setString(2, marca);
+                ps.setInt(3, kms);
+                ps.setFloat(4, precio);
+                ps.setString(5, desc);
+                ps.setInt(6, idPropietario);
+                ps.executeUpdate();
+                // Cerramos el PreparedStatement.
+                ps.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -77,18 +84,20 @@ public class VehiculosDAO {
      * @return 0 si está actualizado y -1 si no está actualizado.
      */
     public static int updateVehiculo(String matricula, int idPropietario, Connection con) {
-        Statement s;
+        PreparedStatement ps;
         // Sentencia SQL para actualizar el propietario de un vehículo donde la mat_veh sea igual al parámetro matrícula.
         String update = "UPDATE " + TABLE
-                + " SET " + COL6 + " = " + idPropietario
-                + " WHERE " + COL1 + " = '" + matricula + "';";
+                + " SET " + COL6 + " = ?"
+                + " WHERE " + COL1 + " = ?;";
         try {
             if (existVehiculo(matricula, con) && existPropietario(idPropietario, con)) {
                 // Preparamos la consulta y la ejecutamos.                     
-                s = con.createStatement();
-                s.executeUpdate(update);
-                // Cerramos el Statement.
-                s.close();
+                ps = con.prepareStatement(update);
+                ps.setInt(1, idPropietario);
+                ps.setString(2, matricula);              
+                ps.executeUpdate();
+                // Cerramos el PreparedStatement.
+                ps.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -111,17 +120,18 @@ public class VehiculosDAO {
      */
     public static int deleteVehiculo(String matricula, Connection con) {
         int numRegDel = 0;
-        Statement s;
+        PreparedStatement ps;
         // Sentencia SQL para eliminar vehículos en la bd donde le campo mat_veh sea igual al parámetro matrícula.
         String delete = "DELETE FROM " + TABLE
-                + " WHERE " + COL1 + " = '" + matricula + "';";
+                + " WHERE " + COL1 + " = ?;";
         try {
             // Preparamos la consulta y la ejecutamos
             // Informamos del número de registros borrados 
-            s = con.createStatement();
-            numRegDel = s.executeUpdate(delete);
-            // Cerramos el Statement.      
-            s.close();
+            ps = con.prepareStatement(delete);
+            ps.setString(1, matricula);
+            numRegDel = ps.executeUpdate();
+            // Cerramos el PreparedStatement.      
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -174,22 +184,23 @@ public class VehiculosDAO {
      */
     public static ArrayList<String> getVehiculos(String marca, Connection con) {
         ArrayList<String> listVehiculos = new ArrayList<>();
-        Statement s;
+        PreparedStatement ps;
         ResultSet rs = null;
         // Sentencia SQL para obtener todos los registros que se correspondan con la marca indicada en los parámetros.
-        String query = "SELECT * FROM " + TABLE + " WHERE " + COL2 + " = '" + marca + "';";
+        String query = "SELECT * FROM " + TABLE + " WHERE " + COL2 + " = ?;";
         try {
             // Preparamos la consulta
-            s = con.createStatement();
-            rs = s.executeQuery(query);
+            ps = con.prepareStatement(query);
+            ps.setString(1, marca);
+            rs = ps.executeQuery();
             // Iteramos sobre los registros del resultado
             while (rs.next()) {
                 listVehiculos.add(rs.getString(COL1) + ", " + rs.getString(COL2) + ", " + rs.getInt(COL3) + ", " + rs.getFloat(COL4) + ", " + rs.getString(COL5) + ", " + rs.getInt(COL6));
             }
             // Cerramos el ResultSet
             rs.close();
-            // Cerramos el Statement
-            s.close();
+            // Cerramos el PreparedStatement
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -211,22 +222,23 @@ public class VehiculosDAO {
      */
     public static ArrayList<String> getVehiculos(int idPropietario, Connection con) {
         ArrayList<String> listVehiculos = new ArrayList<>();
-        Statement s;
+        PreparedStatement ps;
         ResultSet rs = null;
         // Sentencia SQL para obtener los vehículos de un propietario.
-        String query = "SELECT * FROM " + TABLE + " WHERE " + COL6 + " = '" + idPropietario + "';";
+        String query = "SELECT * FROM " + TABLE + " WHERE " + COL6 + " = ?;";
         try {
             //Preparamos la consulta
-            s = con.createStatement();
-            rs = s.executeQuery(query);
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idPropietario);
+            rs = ps.executeQuery();
             // Iteramos sobre los registros del resultado
             while (rs.next()) {
                 listVehiculos.add(rs.getString(COL1) + ", " + rs.getString(COL2) + ", " + rs.getInt(COL3) + ", " + rs.getFloat(COL4));
             }
             // Cerramos el ResultSet
             rs.close();
-            // Cerramos el Statement
-            s.close();
+            // Cerramos el PreparedStatement
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -248,20 +260,21 @@ public class VehiculosDAO {
      */
     public static boolean existVehiculo(String matricula, Connection con) {
         boolean exist = false;
-        Statement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         // Sentencia SQL para comprobar si la matrícula de los parámetros del método está en la base de datos.
-        String query = "SELECT * FROM " + TABLE + " WHERE " + COL1 + " = '" + matricula + "';";
+        String query = "SELECT * FROM " + TABLE + " WHERE " + COL1 + " = ?;";
         try {
             // Ejecuta la consulta
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            ps = con.prepareStatement(query);
+            ps.setString(1, matricula);
+            rs = ps.executeQuery();
             // Procesa los resultados
             exist = rs.next();
             // Cerrar ResultSet
             rs.close();
-            // Cerrar Statement
-            stmt.close();
+            // Cerrar PreparedStatement
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -279,20 +292,22 @@ public class VehiculosDAO {
      */
     public static boolean existVehiculo(String matricula, int idPropietario, Connection con) {
         boolean exist = false;
-        Statement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         // Sentencia SQL para comprobar si la matrícula y el idPropietario de los parámetros del método está en la base de datos.
-        String query = "SELECT * FROM " + TABLE + " WHERE " + COL1 + " = '" + matricula + "' AND " + COL6 + " = " + idPropietario + ";";
+        String query = "SELECT * FROM " + TABLE + " WHERE " + COL1 + " = ? AND " + COL6 + " = ?;";
         try {
             // Ejecuta la consulta
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            ps = con.prepareStatement(query);
+            ps.setString(1, matricula);
+            ps.setInt(2, idPropietario);
+            rs = ps.executeQuery();
             // Procesa los resultados
             exist = rs.next();
             // Cerrar ResultSet
             rs.close();
-            // Cerrar Statement
-            stmt.close();
+            // Cerrar PreparedStatement
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

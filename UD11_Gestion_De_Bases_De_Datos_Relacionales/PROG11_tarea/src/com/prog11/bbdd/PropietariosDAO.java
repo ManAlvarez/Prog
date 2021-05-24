@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -35,19 +35,22 @@ public class PropietariosDAO {
      * @return 0 si está insertado y -1 si no está insertado.
      */
     public static int insertPropietario(String nombre, String dni, Connection con) {
-        // Tipo de sentencia Statement para realizar sentencias sencillas en SQL.
-        Statement s;
+        // Tipo de sentencia PreparedStatement para realizar sentencias en SQL con parámetros.
+        PreparedStatement ps;
         // Sentencia SQL para insertar un propietario.
         String insert = "INSERT INTO " + TABLE
                 + " (" + COL2 + ", " + COL3 + ")"
-                + " VALUES ('" + nombre + "', '" + dni + "');";
+                + " VALUES (?, ?);";
+
         try {
             if (!existPropietario(dni, con)) {
                 // Preparamos la consulta y la ejecutamos.                     
-                s = con.createStatement();
-                s.executeUpdate(insert);
-                // Cerrammos el Statement.
-                s.close();
+                ps = con.prepareStatement(insert);
+                ps.setString(1, nombre);
+                ps.setString(2, dni);
+                ps.executeUpdate();
+                // Cerrammos el PreparedStatement.
+                ps.close();
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -86,17 +89,18 @@ public class PropietariosDAO {
      */
     public static int deletePropietario(String dni, Connection con) {
         int numRegDel = 0;
-        Statement s;
+        PreparedStatement ps;
         // Sentencia SQL para eliminar los registros donde el dni_prop sea igual al parámetro.
         String delete = "DELETE FROM " + TABLE
-                + " WHERE " + COL3 + " = '" + dni + "';";
+                + " WHERE " + COL3 + " = ?;";
         try {
             // Preparamos la consulta y la ejecutamos
             // Informamos del número de registros borrados 
-            s = con.createStatement();
-            numRegDel = s.executeUpdate(delete);
-            // Cerramos el Statement.    
-            s.close();
+            ps = con.prepareStatement(delete);
+            ps.setString(1, dni);
+            numRegDel = ps.executeUpdate();
+            // Cerramos el PreparedStatement.    
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -113,20 +117,21 @@ public class PropietariosDAO {
      */
     public static boolean existPropietario(String dni, Connection con) {
         boolean exist = false;
-        Statement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         // Sentencia SQL para seleccionar todo donde el dni_prop de la bd es igual al parámetro dni.
-        String query = "SELECT * FROM " + TABLE + " WHERE " + COL3 + " = '" + dni + "';";
+        String query = "SELECT * FROM " + TABLE + " WHERE " + COL3 + " = ?;";
         try {
             // Ejecuta la consulta
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            ps = con.prepareStatement(query);
+            ps.setString(1, dni);
+            rs = ps.executeQuery();
             // Procesa los resultados
             exist = rs.next();
             // Cerrar ResultSet
             rs.close();
-            // Cerrar Statement
-            stmt.close();
+            // Cerrar PreparedStatement
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -144,20 +149,21 @@ public class PropietariosDAO {
      */
     public static boolean existPropietario(int idPropietario, Connection con) {
         boolean exist = false;
-        Statement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         // Sentencia SQL para seleccionar todo donde el id_prop de la bd es igual al parámetro idPropietario.
-        String query = "SELECT * FROM " + TABLE + " WHERE " + COL1 + " = '" + idPropietario + "';";
+        String query = "SELECT * FROM " + TABLE + " WHERE " + COL1 + " = ?;";
         try {
             // Ejecuta la consulta
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idPropietario);
+            rs = ps.executeQuery();
             // Procesa los resultados
             exist = rs.next();
             // Cerrar ResultSet
             rs.close();
-            // Cerrar Statement
-            stmt.close();
+            // Cerrar PreparedStatement
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -172,14 +178,15 @@ public class PropietariosDAO {
      * @return El id del propietario si lo encuentra o -1 si no lo encuentra.
      */
     public static int getIdPropietario(String dni, Connection con) {
-        Statement stmt = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         // Sentencia SQL para seleccionar donde el campo dni_prop sea igual al parámetro dni.
-        String query = "SELECT * FROM " + TABLE + " WHERE " + COL3 + " = '" + dni + "';";
+        String query = "SELECT * FROM " + TABLE + " WHERE " + COL3 + " = ?;";
         try {
             // Ejecuta la consulta
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            ps = con.prepareStatement(query);
+            ps.setString(1, dni);
+            rs = ps.executeQuery();
             // Procesa los resultados
             while (rs.next()) {
                 if (rs.getString(COL3).equalsIgnoreCase(dni)) {
@@ -189,8 +196,8 @@ public class PropietariosDAO {
             }
             // Cerrar ResultSet
             rs.close();
-            // Cerrar Statement.
-            stmt.close();
+            // Cerrar PreparedStatement.
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
